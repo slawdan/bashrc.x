@@ -29,6 +29,8 @@ export INPUTRC=~/.local/bashrc.x/etc/inputrc
   export LC_ALL=en_US.UTF-8
 }
 
+[ -d ~/.bashrc.x ] || 'mkdir' ~/.bashrc.x
+
 PATH="/usr/sbin:/usr/bin:/sbin:/bin"
 MANPATH='/usr/share/man'
 [ -d /usr/local ] && {
@@ -45,28 +47,9 @@ MANPATH='/usr/share/man'
 }
 [ -d ~/.local/bashrc.x ] \
   && PATH="$HOME/.local/bashrc.x/sbin:$HOME/.local/bashrc.x/bin:$PATH"
-[ -d ~/.bashrc.x ] \
-  && PATH="$HOME/.bashrc.x/sbin:$HOME/.bashrc.x/bin:$PATH"
+PATH="$HOME/.bashrc.x/sbin:$HOME/.bashrc.x/bin:$PATH"
 export PATH
 export MANPATH
-
-PS1="\\n\\[\\e[0m\\e[1;30m\\]\\d <"
-[ -n "$SUDO_USER" ] && {
-  PS1="$PS1\\[\\e[0;31m\\]\\u\\[\\e[1;30m\\]("
-  PS1="$PS1\\[\\e[0;36m\\]$SUDO_USER\\[\\e[1;30m\\])@"
-} || PS1="$PS1\\[\\e[0;36m\\]\\u\\[\\e[1;30m\\]@"
-PS1="$PS1\\[\\e[0;35m\\]\\h\\[\\e[1;30m\\]:"
-PS1="$PS1\\[\\e[0;33m\\]\\w\\[\\e[1;30m\\]>\\n"
-PS1="$PS1\\[\\e[1;30m\\]\\A [i\\[\\e[0;37m\\]\!"
-PS1="$PS1\\[\\e[1;30m\\]] \\$\\[\\e[0m\\] "
-case "$TERM" in
-  *xterm* | rxvt )
-    [ -n "$SUDO_USER" ] \
-      && PS1="\\[\\e]0;\\u($SUDO_USER)@\\h:\\w\\007\\]$PS1" \
-      || PS1="\\[\\e]0;\\u@\\h:\\w\\007\\]$PS1"
-    ;;
-esac
-export PS1
 
 case `'id' -gn` in
   `'id' -un` | staff | users )

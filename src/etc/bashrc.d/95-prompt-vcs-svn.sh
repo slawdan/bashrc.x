@@ -1,4 +1,4 @@
-# ~/.local/bashrc.x/etc/bashrc.d/05-colors.sh
+# ~/.local/bashrc.x/etc/bashrc.d/95-prompt-vcs-svn.sh
 #
 # This file is part of bashrc.x.
 #
@@ -20,32 +20,16 @@
 # @copyright © 2012 szen.in
 # @license   http://www.gnu.org/licenses/gpl.html
 
-'which' dircolors > /dev/null 2>&1 && {
-  [ -r ~/.bashrc.x/dircolors ] \
-    && eval `'dircolors' -b ~/.bashrc.x/dircolors` \
-    || [ -r ~/.local/bashrc.x/etc/dircolors ] \
-      && eval `'dircolors' -b ~/.local/bashrc.x/etc/dircolors`
+[ -n "$__BASHRC_X_PROMPTC_VCS" ] || export __BASHRC_X_PROMPTC_VCS="$Cgreen"
+
+export __BASHRC_X_PROMPT_VCS_SVN=""
+
+__BASHRC_X_PROMPT_VCS_SVN() {
+  _p=(1 "")
+  [ "$__BASHRC_X_PROMPT_OLDPWD" == "$PWD" ] \
+    || __BASHRC_X_PROMPT_VCS_SVN=`'svn' info > /dev/null 2>&1 && 'echo' trunk`
+  [ -z "$__BASHRC_X_PROMPT_VCS_SVN" ] || \
+    _p[1]="\\[$__BASHRC_X_PROMPTC_DEFAULT\\]/s"
 }
-export LSCOLORS="ExgxfxfhCxfedeCbCdedeb"
-
-export GREP_COLOR="01;32"
-
-export Cnone='\e[0m'
-export Cblack='\e[30m'
-export Cred='\e[0;31m'
-export Cgreen='\e[0;32m'
-export Cyellow='\e[0;33m'
-export Cblue='\e[0;34m'
-export Cpurple='\e[0;35m'
-export Ccyan='\e[0;36m'
-export Cwhite='\e[0;37m'
-export Chblack='\e[1;30m'
-export Chred='\e[1;31m'
-export Chgreen='\e[1;32m'
-export Chyellow='\e[1;33m'
-export Chblue='\e[1;34m'
-export Chpurple='\e[1;35m'
-export Chcyan='\e[1;36m'
-export Chwhite='\e[1;37m'
 
 # vim: se ft=sh ff=unix fenc=utf-8 sw=2 ts=2 sts=2:
